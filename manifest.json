@@ -1,0 +1,21 @@
+{
+  "name": "Colors",
+  "short_name": "Colors",
+  "theme_color": "#1a7ac4",
+  "background_color": "#1a7ac4",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+      {
+          "src": "/images/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+      },
+      {
+          "src": "/images/android-chrome-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+      }
+  ]
+}
