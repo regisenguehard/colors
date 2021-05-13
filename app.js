@@ -152,7 +152,7 @@ couleurs.forEach((element, index) => {
 
 
 // Crée le Service Worker
-if ("serveeeereeeeeeeiceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker.register("/sw.js").then(
       function(registration) {
