@@ -144,7 +144,8 @@ couleurs.forEach((element, index) => {
 		annonce.onend = function (event) {
 		  couleur.innerText = '';
 		}
-		synth.voice = voixAnglaise;
+		// synth.voice = voixAnglaise;
+		synth.lang = 'en-EN';
 
 		synth.speak(annonce);
 	});
