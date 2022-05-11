@@ -1,6 +1,4 @@
-
 let synth = window.speechSynthesis;
-let voixAnglaise;
 let couleur = document.querySelector('#couleur');
 let boxContainer = document.querySelector('#box-container');
 let couleurs = [
@@ -98,70 +96,60 @@ let couleurs = [
 				},
 ];
 
+if (!synth) {
+	alert('window.speechSynthesis non supporté...');
+} else {
 
-function shuffle(a) {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
-}
-
-
-// Mélange les couleurs
-couleurs = shuffle(couleurs);
-
-
-// Prépare la synthèse vocale en anglais
-window.speechSynthesis.onvoiceschanged = function() {
-	let voices = synth.getVoices();
-	for(i = 0; i < voices.length ; i++) {
-		if (voices[i].lang == 'en-GB') {
-			voixAnglaise = voices[i];
+	function shuffle(a) {
+		var j, x, i;
+		for (i = a.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			x = a[i];
+			a[i] = a[j];
+			a[j] = x;
 		}
+		return a;
 	}
-};
 
 
-// Crée les boites de couleurs
-couleurs.forEach((element, index) => {
-	let box = document.createElement("li", {'class': 'box'+index});
-	d = boxContainer.appendChild(box);
-	d.classList.add('box', 'box-'+index);
-	d.style.backgroundColor = element.color;
-	d.dataset.voice = element.voice;
+	// Mélange les couleurs
+	couleurs = shuffle(couleurs);
 
-	box.addEventListener('click', event => {
-		if (synth.speaking) {
-			synth.cancel();
-		}
-		couleur.innerText = box.dataset.voice;
 
-		let annonce = new SpeechSynthesisUtterance(box.dataset.voice);
-		annonce.onend = function (event) {
-		  couleur.innerText = '';
-		}
-		// synth.voice = voixAnglaise;
-		synth.lang = 'en-EN';
+	// Crée les boites de couleurs
+	couleurs.forEach((element, index) => {
+		let box = document.createElement("li", {'class': 'box'+index});
+		d = boxContainer.appendChild(box);
+		d.classList.add('box', 'box-'+index);
+		d.style.backgroundColor = element.color;
+		d.dataset.voice = element.voice;
 
-		synth.speak(annonce);
+		box.addEventListener('click', event => {
+			if (synth.speaking) {
+				synth.cancel();
+			}
+			couleur.innerText = box.dataset.voice;
+
+			let annonce = new SpeechSynthesisUtterance(box.dataset.voice);
+			annonce.lang = 'en-GB';
+			annonce.volume = 1
+
+			synth.speak(annonce);
+		});
 	});
-});
 
 
-// Crée le Service Worker
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js").then(
-      function(registration) {
-        console.log("Enregistrement OK - Scope : ", registration.scope);
-      },
-      function(err) {
-        console.log("Erreur d'enregistrement : ", err);
-      }
-    );
-  });
+	// Crée le Service Worker
+	if ("serviceWorker" in navigator) {
+	window.addEventListener("load", function() {
+		navigator.serviceWorker.register("/sw.js").then(
+		function(registration) {
+			console.log("Enregistrement OK - Scope : ", registration.scope);
+		},
+		function(err) {
+			console.log("Erreur d'enregistrement : ", err);
+		}
+		);
+	});
+	}
 }
