@@ -141,15 +141,15 @@ if (!synth) {
 
 	// Crée le Service Worker
 	if ("serviceWorker" in navigator) {
-	window.addEventListener("load", function() {
-		navigator.serviceWorker.register("/sw.js").then(
-		function(registration) {
-			console.log("Enregistrement OK - Scope : ", registration.scope);
-		},
-		function(err) {
-			console.log("Erreur d'enregistrement : ", err);
-		}
-		);
-	});
+		window.addEventListener("load", function() {
+			navigator.serviceWorker.register("/sw.js").then(
+			function(registration) {
+				console.log("Enregistrement OK - Scope : ", registration.scope);
+			},
+			function(err) {
+				console.log("Erreur d'enregistrement : ", err);
+			}
+			);
+		});
 	}
 }
